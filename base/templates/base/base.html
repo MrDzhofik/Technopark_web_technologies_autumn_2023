@@ -1,0 +1,138 @@
+{% extends 'main.html' %}
+
+{% block content %}
+
+
+<a href="{% url 'create' %}"><button class="btn btn-primary ">Create question</button></a>
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-12 mt-3 d-flex align-items-center">
+            <h1 class="mb-0 mr-2">Questions</h1>
+        </div>
+
+        <div class="col-lg-10  ml-auto">
+            <div class="card mb-3 w-100">
+                <div class="row no-gutters">
+                    <div class="col-sm-9">
+                        <div class="card-body d-flex flex-column h-100">
+                            <h4 class='author'>MrDzhofik</h4>
+                            <h5 class="card-title"><a href="{% url 'question' %}">Which language to learn first:
+                                    Abkhazian
+                                    or
+                                    Python?</a></h5>
+
+                            <div class="mt-auto d-flex flex-row">
+                                <div class="mr-2">
+                                    <a href="{% url 'question' %}"><button
+                                            class="btn badge badge-secondary ml-auto">Answers</button></a>
+                                    <button class="btn badge badge-secondary ml-auto">Python</button>
+                                </div>
+                            </div>
+                            <div class="like-container">
+                                <button class="btn badge badge-success like-button ml-auto">Like</button>
+                                <span class="like-count">3</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="card mb-3 w-100">
+                <div class="row no-gutters">
+                    <div class="col-sm-9">
+                        <div class="card-body d-flex flex-column h-100">
+                            <h4 class='author'>Ronaldo</h4>
+                            <h5 class="card-title"><a href="{% url 'question' %}">Why I should play with uzbeki?</a>
+                            </h5>
+                            <div class="mt-auto d-flex flex-row">
+                                <div class="mr-2">
+                                    <a href="{% url 'question' %}"><button
+                                            class="btn badge badge-secondary ml-auto">Answers</button></a>
+                                    <button class="btn badge badge-secondary ml-auto">Football</button>
+                                </div>
+
+                            </div>
+                            <div class="like-container">
+                                <button class="btn badge badge-success like-button ml-auto">Like</button>
+                                <span class="like-count">2</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card mb-3 w-100">
+                <div class="row no-gutters">
+                    <div class="col-sm-9">
+                        <div class="card-body d-flex flex-column h-100">
+                            <h4 class='author'>Messi</h4>
+                            <h5 class="card-title"><a href="{% url 'question' %}">Is World Cup trophy is neccesary?</a>
+                            </h5>
+
+                            <div class="mt-auto d-flex flex-row">
+                                <div class="mr-2">
+                                    <a href="{% url 'question' %}"><button
+                                            class="btn badge badge-secondary ml-auto">Answers</button></a>
+                                    <button class="btn badge badge-secondary ml-auto">World Cup</button>
+                                </div>
+
+                            </div>
+                            <div class="like-container">
+                                <button class="btn badge badge-success like-button ml-auto">Like</button>
+                                <span class="like-count">1</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <nav aria-label="Page navigation example" class="d-flex justify-content-start">
+                <ul class="pagination">
+                    <li class="page-item"><a class="page-link" href="{% url 'home' %}">1</a></li>
+                    <li class="page-item"><a class="page-link" href="{% url 'second_page' %}">2</a></li>
+                </ul>
+            </nav>
+        </div>
+
+        <div>
+            <h3>Popular Tags</h3>
+            <hr>
+
+            <div>
+                <a href="{% url 'home' %}">ALL</a>
+            </div>
+
+            <div>
+                <a href=""> Python </a>
+            </div>
+            <div>
+                <a href=""> C++ </a>
+            </div>
+            <div>
+                <a href=""> Football </a>
+            </div>
+            <div>
+                <a href=""> World Cup </a>
+            </div>
+
+
+            <div class="authors">
+                <h5>Popular Authors</h5>
+                <div class="row">
+                    <div class="col-sm">
+                        <a href="#" class="mb-3 d-block">Messi</a>
+                        <a href="#" class="mb-3 d-block">Ronaldo</a>
+                        <a href="#" class="mb-3 d-block">Nart</a>
+                        <a href="#" class="mb-3 d-block">Ramin</a>
+                        <a href="#" class="mb-3 d-block">MrDzhofik</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    {% endblock content %}

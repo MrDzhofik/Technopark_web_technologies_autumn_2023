@@ -20,5 +20,11 @@ def login(request):
 def signup(request):
     return render(request, 'base/signup.html')
 
+def login_err(request):
+    return render(request, 'base/login_error.html')
+
+def signup_err(request):
+    return render(request, 'base/signup_error.html')
+
 def profile(request):
     return render(request, 'base/profile.html')

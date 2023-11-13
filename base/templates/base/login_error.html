@@ -41,7 +41,12 @@
             <div class="col-12 mt-3 d-flex align-items-center">
                 <h1 class="mb-0 mr-2">Log in</h1>
             </div>
-            <div class="col-lg-10  ml-auto">
+            <div class="col-12 mt-3 d-flex align-items-center ">
+                <p class="text-danger">
+                    Wrong password!
+                </p>
+            </div>
+            <div class=" col-lg-10 ml-auto">
                 <form action="{% url 'home' %}" method="GET">
                     <div class="form-group row">
                         <label for="login" class="col-sm-3 col-form-label">Login</label>
@@ -65,16 +70,10 @@
                                         new
                                         account</a>
                                 </p>
-
                             </div>
-
                         </div>
                     </div>
                 </form>
-                <p>
-                    <a href="{% url 'login_err' %}"><button class="btn btn-warning">Show
-                            error</button></a>
-                </p>
             </div>
         </div>
     </div>

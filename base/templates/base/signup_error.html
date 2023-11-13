@@ -42,8 +42,8 @@
                 <h1 class="mb-0 mb-2">Registration</h1>
             </div>
             <div class="col-12 mt-3 d-flex align-items-center">
-                <p>
-                    <!-- Тут ошибки -->
+                <p class="text-danger">
+                    Passwords doesn't match
                 </p>
             </div>
             <div class="col-lg-10 mx-auto">
@@ -98,9 +98,6 @@
                         </div>
                     </div>
                 </form>
-                <p>
-                    <a href="{% url 'signup_err' %}"><button class="btn btn-warning">Show error</button></a>
-                </p>
             </div>
         </div>
     </div>

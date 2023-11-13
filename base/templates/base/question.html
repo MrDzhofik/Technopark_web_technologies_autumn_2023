@@ -115,6 +115,14 @@
             </div>
         </div>
         <a href="{% url 'home' %}"><button class="btn btn-warning">Back</button></a>
+
+        <nav aria-label="Answers navigation example" class="d-flex justify-content-start">
+            <ul class="pagination">
+                <li class="page-item"><a class="page-link" href="{% url 'question' %}">Previous</a></li>
+                <li class="page-item"><a class="page-link" href="{% url 'question' %}">1</a></li>
+                <li class="page-item"><a class="page-link" href="{% url 'question' %}">Next</a></li>
+            </ul>
+        </nav>
     </div>
 
 </div>

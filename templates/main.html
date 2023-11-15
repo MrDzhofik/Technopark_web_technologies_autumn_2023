@@ -11,9 +11,50 @@
 
     {% include "navbar.html" %}
 
-    {% block content %}
+    <div class="container mt-5">
 
-    {% endblock %}
+        {% block content %}
+
+        {% endblock %}
+
+        <div>
+            <h3>Popular Tags</h3>
+            <hr>
+
+            <div>
+                <a href="{% url 'home' %}">ALL</a>
+            </div>
+
+            <div>
+                <a href=""> Python </a>
+            </div>
+            <div>
+                <a href=""> C++ </a>
+            </div>
+            <div>
+                <a href=""> Football </a>
+            </div>
+            <div>
+                <a href=""> World Cup </a>
+            </div>
+
+
+            <div class="authors">
+                <h5>Popular Authors</h5>
+                <div class="row">
+                    <div class="col-sm">
+                        <a href="#" class="mb-3 d-block">Messi</a>
+                        <a href="#" class="mb-3 d-block">Ronaldo</a>
+                        <a href="#" class="mb-3 d-block">Nart</a>
+                        <a href="#" class="mb-3 d-block">Ramin</a>
+                        <a href="#" class="mb-3 d-block">MrDzhofik</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
 
 </body>
 

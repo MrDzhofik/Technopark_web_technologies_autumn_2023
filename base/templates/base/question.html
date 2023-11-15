@@ -3,8 +3,6 @@
 {% block content %}
 
 <div class="row">
-
-
     <div class="col-lg-10 ml-right">
         <div class="col-12 mt-3 d-flex align-items-center">
             <h2 class="mb-0 mr-2">Question</h2>
@@ -13,29 +11,18 @@
             <div class="row no-gutters">
                 <div class="col-sm-9">
                     <div class="card-body d-flex flex-column h-100">
-                        <h4 class='author'>MrDzhofik</h4>
-                        <h5 class="card-title"><a href="{% url 'question' %}">Which language to learn first: Abkhazian
-                                or
-                                Python?</a></h5>
-                        <p>Studying Python is important because this programming language allows for the development of
-                            a wide range of applications, automating tasks, and creating analytical tools, significantly
-                            expanding opportunities in the field of programming and information technology. Python is
-                            also widely used in the areas of artificial intelligence, data science, and web development,
-                            making it a valuable tool for modern professionals and students. Studying the Abkhaz
-                            language offers the opportunity to immerse oneself in the rich culture and history of the
-                            Abkhaz people, fostering mutual understanding and tolerance between cultures. Additionally,
-                            knowledge of Abkhaz can be beneficial when visiting the region and interacting with its
-                            inhabitants, promoting deeper integration and exchange of experiences.</p>
+                        <h4 class='author'>{{question.author}}</h4>
+                        <p>{{ question.text }}</p>
 
                         <div class="mt-auto d-flex flex-row">
                             <div class="mr-2">
-                                <button class="btn badge badge-secondary ml-auto">Python</button>
+                                <button class="btn badge badge-secondary ml-auto">{{ question.tag }}</button>
                             </div>
 
                         </div>
                         <div class="like-container">
                             <button class="btn badge badge-success like-button ml-auto">Like</button>
-                            <span class="like-count">3</span>
+                            <span class="like-count">{{ question.likes }}</span>
                         </div>
                     </div>
                 </div>
@@ -103,10 +90,17 @@
                 </div>
             </div>
         </div>
+        <nav aria-label="Answers navigation example" class="d-flex justify-content-start">
+            <ul class="pagination">
+                <li class="page-item"><a class="page-link" href="{% url 'home' %}">Previous</a></li>
+                <li class="page-item"><a class="page-link" href="{% url 'home' %}">1</a></li>
+                <li class="page-item"><a class="page-link" href="{% url 'home' %}">Next</a></li>
+            </ul>
+        </nav>
         <div class="card mb-3 w-100">
             <div class="card-body">
                 <h5 class="card-title">Your Answer</h5>
-                <form action="{% url 'question'%}">
+                <form action="{% url 'home'%}">
                     <div class="form-group">
                         <textarea class="form-control" rows="5" placeholder="Write your answer here"></textarea>
                     </div>
@@ -116,16 +110,9 @@
         </div>
         <a href="{% url 'home' %}"><button class="btn btn-warning">Back</button></a>
 
-        <nav aria-label="Answers navigation example" class="d-flex justify-content-start">
-            <ul class="pagination">
-                <li class="page-item"><a class="page-link" href="{% url 'question' %}">Previous</a></li>
-                <li class="page-item"><a class="page-link" href="{% url 'question' %}">1</a></li>
-                <li class="page-item"><a class="page-link" href="{% url 'question' %}">Next</a></li>
-            </ul>
-        </nav>
+
     </div>
 
-</div>
 
 
-{% endblock content %}
+    {% endblock content %}

@@ -1,3 +1,72 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 # Create your models here.
+class UserProfile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    bio = models.TextField(blank=True)
+    avatar = models.ImageField(upload_to='upload/avatars', blank=True, null=True)
+
+class Tag(models.Model):
+    name = models.CharField(max_length=255)
+
+    def __str__(self):
+        return self.name
+
+class QuestionManager(models.Manager):
+    def new_rating_order(self):
+        queryset = self.get_queryset()
+        return queryset.order_by('-id')
+
+    def hot_rating_order(self):
+        queryset = self.get_queryset()
+        return queryset.order_by('-likes')
+
+
+    def by_tag(self, tag_name):
+        queryset = self.get_queryset()
+        return queryset.filter(tags__name__exact=tag_name)
+
+class Question(models.Model):
+    title = models.CharField(max_length=255)
+    content = models.TextField()
+    tags = models.ManyToManyField(Tag)
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    likes = models.IntegerField(default=0)
+    created = models.DateTimeField(auto_now_add=True)
+
+    @property
+    def answers_count(self):
+        return self.answers.count()
+
+    objects = QuestionManager()
+
+    def __str__(self):
+        return self.title
+
+
+class Answer(models.Model):
+    content = models.TextField()
+    question = models.ForeignKey(Question, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    likes = models.IntegerField(default=0)
+    created = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"Answer to {self.question.title}"
+
+class Answer_Like(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    answer = models.ForeignKey(Answer, on_delete=models.CASCADE)
+    value = models.SmallIntegerField(default=0)
+
+    def __str__(self):
+        return f"{self.user.username} likes {self.answer}"
+    
+class Question_Like(models.Model):
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    question = models.ForeignKey(Question, on_delete=models.CASCADE)
+    value = models.SmallIntegerField(default=0)
+
+    def __str__(self):
+        return f"{self.author.username} likes {self.question}"

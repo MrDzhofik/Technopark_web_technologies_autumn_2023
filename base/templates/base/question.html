@@ -1,5 +1,7 @@
 {% extends 'main.html' %}
 
+{% load django_bootstrap5 %}
+
 {% block content %}
 
 <div class="row">
@@ -46,11 +48,12 @@
         <div class="card mb-3 w-100">
             <div class="card-body">
                 <h5 class="card-title">Your Answer</h5>
-                <form action="{% url 'home'%}">
+                <form action="{% url 'question' question.id %}" method="POST">
                     <div class="form-group">
-                        <textarea class="form-control" rows="5" placeholder="Write your answer here"></textarea>
+                        {% csrf_token %}
+                        {% bootstrap_form form %}
                     </div>
-                    <button type="submit" class="btn btn-primary">Answer</button>
+                    {% bootstrap_button button_type="submit" content="Answer" %}
                 </form>
             </div>
         </div>

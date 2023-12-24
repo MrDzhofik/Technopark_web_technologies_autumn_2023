@@ -21,10 +21,14 @@
     <div class="user_info">
         <div class="d-flex flex-column ml-2 user-info">
 
+            {% if user.username %}
+            <span class="font-weight-bold mb-1">{{ user.username }}</span>
+            {% else %}
             <span class="font-weight-bold mb-1">Ronaldo</span>
+            {% endif %}
             <div class="d-flex flex-row">
                 <a href="{% url 'profile' %}" class="mr-2 badge badge-secondary">Settings</a>
-                <a href="{% url 'login' %}" class="badge badge-secondary">Log out</a>
+                <a href="{% url 'logout' %}" class="badge badge-secondary">Log out</a>
             </div>
 
         </div>

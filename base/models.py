@@ -7,6 +7,9 @@ class UserProfile(models.Model):
     bio = models.TextField(blank=True)
     avatar = models.ImageField(upload_to='upload/avatars', blank=True, null=True)
 
+    def __str__(self):
+        return self.user.username
+
 class Tag(models.Model):
     name = models.CharField(max_length=255)
 
@@ -26,6 +29,10 @@ class QuestionManager(models.Manager):
     def by_tag(self, tag_name):
         queryset = self.get_queryset()
         return queryset.filter(tags__name__exact=tag_name)
+    
+    def by_author(self, author):
+        queryset = self.get_queryset()
+        return queryset.filter(author__name__exact=author)
 
 class Question(models.Model):
     title = models.CharField(max_length=255)
@@ -43,6 +50,16 @@ class Question(models.Model):
 
     def __str__(self):
         return self.title
+
+class AnswerManager(models.Manager):
+    def hot_rating_order(self):
+        queryset = self.get_queryset()
+        return queryset.order_by('-likes')
+    
+    def new_rating_order(self):
+        queryset = self.get_queryset()
+        return queryset.order_by('-created')
+        
 
 
 class Answer(models.Model):

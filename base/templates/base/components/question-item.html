@@ -8,7 +8,9 @@
                     <div class="mr-2">
                         <a href="{% url 'question' question.id %}"><button
                                 class="btn badge badge-secondary ml-auto">Answers</button></a>
-                        <button class="btn badge badge-secondary ml-auto">{{ question.tag }}</button>
+                        <a href="{% url 'tag' tag.name %}"><button class="btn badge badge-secondary ml-auto">{{
+                                question.tag
+                                }}</button></a>
                     </div>
                 </div>
                 <div class="like-container">

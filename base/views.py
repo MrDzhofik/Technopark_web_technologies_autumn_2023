@@ -8,6 +8,7 @@ from django.http import Http404
 from django.contrib import auth
 from .forms import UserForm, AnswerForm, QuestionForm
 from django.contrib.auth.models import User
+from django.forms.models import model_to_dict
 
 # Create your views here.
 
@@ -44,9 +45,6 @@ def create(request):
         form = QuestionForm.QuestionForm()
     context = {'form': form}
     return render(request, 'base/ask.html', context)
-
-def second_page(request):
-    return render(request, 'base/second_page.html')
 
 @login_required
 def question(request, question_id):
@@ -98,11 +96,14 @@ def signup(request):
 @login_required
 def profile(request):
     if request.method == "POST":
-        form = UserForm.UserSettingsForm(request.POST)
+        form = UserForm.UserSettingsForm(request.POST, request.FILES, instance=request.user)
         if form.is_valid():
-            user = user_edit(request, form)
+            form.save()
     else:
-        form = UserForm.UserSettingsForm()
+        initial = model_to_dict(request.user)
+        init = model_to_dict(UserProfile.objects.get(user=request.user))
+        initial.update(init)
+        form = UserForm.UserSettingsForm(initial=initial)
     context = {'form': form}
     return render(request, 'base/profile.html', context)
 
@@ -141,29 +142,11 @@ def user_reg(request, form):
     if password == confirm_password:
         user = User.objects.create_user(username=username, email=email, password=password)
         user.save()
+        user_prof = UserProfile.objects.create(user = user)
+        user_prof.save()
         user = auth.authenticate(request, username=username, password=password)
         return user
     return False
-
-def user_edit(request, form):
-    username = form.cleaned_data['username']
-    email = form.cleaned_data['email']
-    bio = form.cleaned_data['bio']
-    avatar = request.FILES['avatar']
-    user = User.objects.get(username=username)
-    if email:
-        user.email = email
-        user.save()
-    if avatar:
-        try: 
-            user_profile = UserProfile.objects.get(user=user)
-        except:
-            user_profile = UserProfile.objects.create(user=user)
-        user_profile.bio = bio
-        user_profile.avatar = avatar
-        user_profile.save()
-
-    return user
 
 def create_answer(request, question):
     form = AnswerForm.AnswerForm(request.POST)

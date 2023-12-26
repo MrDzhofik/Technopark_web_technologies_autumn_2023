@@ -32,7 +32,9 @@
             </div>
 
         </div>
-        <img src="{% static 'media/ronaldo.jpg' %}" alt="Avatar" class="img-fluid">
+        {% if request.user.userprofile.avatar %}
+        <img src="{{ request.user.userprofile.avatar.url }}" alt=" Avatar" class="img-fluid">
+        {% endif %}
     </div>
 
 </div>

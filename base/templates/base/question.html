@@ -19,12 +19,14 @@
                         <div class="mt-auto d-flex flex-row">
                             {% for tag in tags %}
                             <div class="mr-2">
-                                <button class="btn badge badge-secondary ml-auto">{{ tag }}</button>
+                                <button class="btn btn-info btn-sm ml-auto">{{ tag }}</button>
                             </div>
                             {% endfor %}
                         </div>
+                        <p></p>
                         <div class="like-container">
-                            <button class="btn badge badge-success like-button ml-auto">Like</button>
+                            <button class="btn btn-success btn-sm like-button ml-auto">Like</button>
+                            <button class="btn btn-danger btn-sm like-button ml-auto">Dislike</button>
                             <span class="like-count">{{ question.likes }}</span>
                             <p>Created: {{ question.created }}</p>
                         </div>

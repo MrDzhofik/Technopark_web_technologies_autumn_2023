@@ -4,7 +4,6 @@ from . import views
 urlpatterns = [
     path('', views.home, name="home"),
     path('ask', views.create, name="create"),
-    path('2', views.second_page, name="second_page"),
     path('question/<int:question_id>/', views.question, name="question"),
     path('hot', views.hot, name='hot'),
     path('tag/<str:tag_name>', views.tag, name='tag'),

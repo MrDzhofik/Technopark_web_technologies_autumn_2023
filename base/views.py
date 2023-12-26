@@ -9,6 +9,8 @@ from django.contrib import auth
 from .forms import UserForm, AnswerForm, QuestionForm
 from django.contrib.auth.models import User
 from django.forms.models import model_to_dict
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_protect 
 
 # Create your views here.
 
@@ -127,6 +129,16 @@ def tag(request, tag_name):
     context={'questions': item, 'page': page, 'tag': tag_name}
     return render(request, 'base/tag.html', context)
 
+
+@csrf_protect
+@login_required
+def like(request):
+    id = request.POST.get('question_id')
+    question = get_object_or_404(Question, pk=id)
+    Question_Like.objects.toggle_like(user=request.user, question=question)
+    count = question.likes_count()
+
+    return JsonResponse({'count': count})
 
 def user_auth(request, form):
     username = form.cleaned_data['username']

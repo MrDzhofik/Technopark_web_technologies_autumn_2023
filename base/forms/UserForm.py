@@ -25,8 +25,12 @@ class UserSettingsForm(forms.ModelForm):
         user = super().save(**kwargs)
 
         profile = UserProfile.objects.get(user=user)
-        profile.avatar = self.cleaned_data.get('avatar')
-        profile.bio = self.cleaned_data.get('bio')
+        recieved_avatar = self.cleaned_data.get('avatar')
+        if recieved_avatar:
+            profile.avatar = self.cleaned_data.get('avatar')
+        received_bio = self.cleaned_data.get('bio')
+        if received_bio:
+            profile.bio = self.cleaned_data.get('bio')
         profile.save()
 
         return user

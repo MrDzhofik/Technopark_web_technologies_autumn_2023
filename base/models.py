@@ -45,6 +45,9 @@ class Question(models.Model):
     @property
     def answers_count(self):
         return self.answers.count()
+    
+    def likes_count(self):
+        return self.likes
 
     objects = QuestionManager()
 
@@ -80,10 +83,19 @@ class Answer_Like(models.Model):
     def __str__(self):
         return f"{self.user.username} likes {self.answer}"
     
+class Question_LikeManager(models.Manager):
+    def toggle_like(self, user, question):
+        if self.filter(author=user, question=question).exists():
+            self.filter(author=user, question=question).delete()
+        else:
+            self.create(author=user, question=question)
+
 class Question_Like(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
     value = models.SmallIntegerField(default=0)
+
+    objects = Question_LikeManager()
 
     def __str__(self):
         return f"{self.author.username} likes {self.question}"

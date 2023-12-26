@@ -18,9 +18,12 @@
                         </p>
                     </div>
                 </div>
-                <div class="like-container">
-                    <button class="btn btn-success btn-sm like-button ml-auto">Like</button>
-                    <button class="btn btn-danger btn-sm like-button ml-auto">Dislike</button>
+                <div class="like-section">
+                    <button class="btn btn-success btn-sm like-button ml-auto" data-id="{{ question.id }}"
+                        class="like">Like</button>
+                    <button class="btn btn-danger btn-sm like-button ml-auto" data-id="{{ question.id }}"
+                        class="dislike">Dislike</button>
+                    <span>Likes: </span>
                     <span class="like-count">{{question.likes}}</span>
                     <p>Created: {{ question.created }}</p>
                 </div>

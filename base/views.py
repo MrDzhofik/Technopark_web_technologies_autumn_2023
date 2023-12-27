@@ -134,11 +134,49 @@ def tag(request, tag_name):
 @login_required
 def like(request):
     id = request.POST.get('question_id')
+    type = request.POST.get('value')
+    if type == 'like':
+        value = 1
+    else:
+        value = -1
     question = get_object_or_404(Question, pk=id)
-    Question_Like.objects.toggle_like(user=request.user, question=question)
-    count = question.likes_count()
+    Question_Like.objects.toggle_like(user=request.user, question=question, value=value)
+    question = get_object_or_404(Question, pk=id)
+    
+    count = question.likes
 
     return JsonResponse({'count': count})
+
+@csrf_protect
+@login_required
+def answer_like(request):
+    id = request.POST.get('answer_id')
+    type = request.POST.get('value')
+    if type == 'like':
+        value = 1
+    else:
+        value = -1
+    answer = get_object_or_404(Answer, pk=id)
+    Answer_Like.objects.toggle_like(user=request.user, answer=answer, value=value)
+    answer = get_object_or_404(Answer, pk=id)
+    
+    count = answer.likes
+
+    return JsonResponse({'count': count})
+
+@csrf_protect
+@login_required
+def right_answer(request):
+    id = request.POST.get('answer_id')
+    question_id = request.POST.get('question_id')
+    question = get_object_or_404(Question, pk=question_id)
+    answer = get_object_or_404(Answer, pk=id)
+    Answer.objects.change_right_answer(user=request.user, answer=answer, question=question)
+    answer = get_object_or_404(Answer, pk=id)
+
+    right_answer = answer.right_answer
+
+    return JsonResponse({'right_answer': right_answer})
 
 def user_auth(request, form):
     username = form.cleaned_data['username']

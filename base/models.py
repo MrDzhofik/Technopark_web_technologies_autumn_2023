@@ -62,6 +62,12 @@ class AnswerManager(models.Manager):
     def new_rating_order(self):
         queryset = self.get_queryset()
         return queryset.order_by('-created')
+    
+    def change_right_answer(self, user, question, answer):
+        if (user == question.author):
+            value = not answer.right_answer
+            Answer.objects.filter(pk=answer.id).update(right_answer=value)
+        pass
         
 
 
@@ -71,24 +77,51 @@ class Answer(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     likes = models.IntegerField(default=0)
     created = models.DateTimeField(auto_now_add=True)
+    right_answer = models.BooleanField(default=False)
+
+    objects = AnswerManager()
 
     def __str__(self):
         return f"Answer to {self.question.title}"
+
+class Answer_LikeManager(models.Manager):
+    def toggle_like(self, user, answer, value):
+        if self.filter(user=user, answer=answer).exists():
+            self.filter(user=user, answer=answer).delete()
+        else:
+            self.create(user=user, answer=answer, value=value)
+        id = answer.id
+        like_value = 0
+        likes_count = Answer_Like.objects.filter(answer=answer)
+
+        for like in likes_count:
+            like_value += like.value
+        Answer.objects.filter(pk=id).update(likes=like_value)
+
 
 class Answer_Like(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     answer = models.ForeignKey(Answer, on_delete=models.CASCADE)
     value = models.SmallIntegerField(default=0)
 
+    objects = Answer_LikeManager()
+
     def __str__(self):
         return f"{self.user.username} likes {self.answer}"
     
 class Question_LikeManager(models.Manager):
-    def toggle_like(self, user, question):
+    def toggle_like(self, user, question, value):
         if self.filter(author=user, question=question).exists():
             self.filter(author=user, question=question).delete()
         else:
-            self.create(author=user, question=question)
+            self.create(author=user, question=question, value=value)
+        id = question.id
+        like_value = 0
+        likes_count = Question_Like.objects.filter(question=question)
+
+        for like in likes_count:
+            like_value += like.value
+        Question.objects.filter(pk=id).update(likes=like_value)
 
 class Question_Like(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -98,4 +131,8 @@ class Question_Like(models.Model):
     objects = Question_LikeManager()
 
     def __str__(self):
-        return f"{self.author.username} likes {self.question}"
+        if self.value == 1:
+            like = "like"
+        else:
+            like = "dislike"
+        return f"{self.author.username} {like} {self.question}"
